@@ -891,8 +891,6 @@ class TreeAVL(object):
     def rotateLeft(self, node):
         right = node._rightChild
         node._rightChild = right._leftChild
-        # if node._rightChild != None:
-        #     node._rightChild = right._leftChild
         if right._leftChild != None:
             right._leftChild._parent = node
 
@@ -1109,36 +1107,36 @@ if __name__ == '__main__':
         tree.print_structure()
         print(tree)
 
-    def wordbst(filename):
-        file = open(filename, 'r')  # open the file
-        fulltext = file.read()  # read it all into one big string
-        stripped = re.sub('[^a-zA-Z\s]+', '',
-                          fulltext)  # remove non-letters or -spaces
-        wordlist = stripped.split(
-        )  # split the string on white space into words in a list
-        print(len(wordlist), 'words in total')
-        bst = TreeAVL()
-        for word in wordlist:
-            bst.add(word)
-        return bst
+    # def wordbst(filename):
+    #     file = open(filename, 'r')  # open the file
+    #     fulltext = file.read()  # read it all into one big string
+    #     stripped = re.sub('[^a-zA-Z\s]+', '',
+    #                       fulltext)  # remove non-letters or -spaces
+    #     wordlist = stripped.split(
+    #     )  # split the string on white space into words in a list
+    #     print(len(wordlist), 'words in total')
+    #     bst = TreeAVL()
+    #     for word in wordlist:
+    #         bst.add(word)
+    #     return bst
 
-    def test_books():
-        filenames = [
-            'testfile.txt', 'drMoreau.txt', 'frankenstein.txt', 'dracula.txt'
-        ]
-        words = ['blood', 'screaming', 'science']
-        for name in filenames:
-            print('Reading file', name)
-            tree = wordbst(name)
-            print('bst has stats', tree._stats())
-            for word in words:
-                node = tree.search(word)
-                if node:
-                    # print(word, ': (', node._stats(), ')')
-                    print(node)
-                else:
-                    print(word, 'is not in', name)
-            print('\n\n')
+    # def test_books():
+    #     filenames = [
+    #         'testfile.txt', 'drMoreau.txt', 'frankenstein.txt', 'dracula.txt'
+    #     ]
+    #     words = ['blood', 'screaming', 'science']
+    #     for name in filenames:
+    #         print('Reading file', name)
+    #         tree = wordbst(name)
+    #         print('bst has stats', tree._stats())
+    #         for word in words:
+    #             node = tree.search(word)
+    #             if node:
+    #                 # print(word, ': (', node._stats(), ')')
+    #                 print(node)
+    #             else:
+    #                 print(word, 'is not in', name)
+    #         print('\n\n')
 
     # _testadd()
     # print('\n\n\n\n\n\n')
