@@ -1,8 +1,6 @@
 GraphADT
 My implementation of a Graph ADT in python. Consisting of an Edge, Vertex and Graph class.
 
-Specifications from: http://www.cs.ucc.ie/~kb11/teaching/CS2516/Lectures/restricted/L10-TheGraphADT.pdf
-
 Vertex element(): returns the label of the vertex
 
 Edge vertices(): returns the pair of vertices the edge is incident on opposite(x): if the edge is incident on x, return the other vertex element(): return the label of the edge
