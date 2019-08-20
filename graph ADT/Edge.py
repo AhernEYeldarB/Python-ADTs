@@ -13,24 +13,36 @@ class Edge(object):
         opposite(x): if the edge is incident on x, return the other vertex
         element(): return the label of the edge
     '''
-
-    def __init__(self, vertexA, vertexB, label, weight=0):
+    __slots__ = ['_label','_name','_weight','_vertices']
+    def __init__(self, vertexA, vertexB, label=None, weight=0):
         if label == None:
-            self._label = str(vertexA.element()) + '--' + str(vertexB.element())
+            self._label = str(vertexA.element()) + '--' + str(
+                vertexB.element())
         else:
             self._label = label
+
+        self._name = None
+
         self._weight = weight
+
         self._vertices = (vertexA, vertexB)
 
     def __repr__(self):
-        outstring = ('%s: ' % (self._label))
+        if self._name:
+            outstring = ('%s: ' % (self._name))
+        else:
+            outstring = ('%s: ' % (self._label))
         return outstring
-        
+
     def __str__(self):
         # return ('(' + str(self._vertices[0]) + '--'
         #     + str(self._vertices[1]) + ' : '
         #     + str(self._label) + ')')
-        return ('(' + str(self._label) +' : ' + str(self._weight) + ')')
+        if self._name:
+            name = self._name
+        else:
+            name = self._label
+        return ('(' + str(name) + ' : ' + str(self._weight) + ')')
 
     def vertices(self):
         return self._vertices

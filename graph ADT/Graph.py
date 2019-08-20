@@ -6,10 +6,11 @@
 #  _// \\_  //   \\  <<   >>      _)(|_    //   \\_  \\    >>  ||>>_   //   \\      \\    >>  |||_  _// \\_
 # (__) (__)(_") ("_)(__) (__)    (__)__)  (__)  (__)(__)  (__)(__)__) (_") ("_)    (__)  (__)(__)_)(__) (__)
 
-import Vertex as Vertex
-import Edge as Edge
-import Stack
+import graph.Vertex as Vertex
+import graph.Edge as Edge
+import graph.Stack
 import copy
+from math import radians, cos, sin, asin, sqrt
 
 
 class Graph(object):
@@ -46,8 +47,8 @@ class Graph(object):
 
             Only represents the forward edges.
         """
-        hstr = ('|V| = ' + str(self.numVertices()) + '; |E| = ' + str(
-            self.numEdges()))
+        hstr = ('|V| = ' + str(self.numVertices()) + '; |E| = ' +
+                str(self.numEdges()))
         vstr = '\nVertices: '
         for v in self._vertices:
             vstr += str(v) + '-'
@@ -73,7 +74,7 @@ class Graph(object):
         edgelist = []
         for vertex in self._vertices:
             for edge in self._vertices[vertex]:
-                #to avoid duplicates, only return out edges
+                # to avoid duplicates, only return out edges
                 if self._vertices[vertex][edge].start() == vertex:
                     edgelist.append(self._vertices[vertex][edge])
         return edgelist
@@ -119,7 +120,7 @@ class Graph(object):
         self._numVertices += 1
         return vertex
 
-    def addVertex_if_new(self, label):
+    def addVertex_if_new(self, label, x, y):
         """ Add and return a vertex with element, if not already in graph.
 
             Checks for equality between the elements. If there is special
@@ -130,13 +131,13 @@ class Graph(object):
             To ensure vertices are unique for individual parts of element,
             separate methods need to be written.
         """
-        for vertices in self._vertices:
-            if vertices.element() == label:
+        for vertex in self._vertices:
+            if vertex.element() == label:
                 #print('Already there')
-                return vertices
+                return vertex
 
         self._numVertices += 1
-        return self.addVertex(label)
+        return self.addVertex(label, x, y)
 
     def addEdge(self, vertexA, vertexB, label, weight, oneway='true'):
         """ Add and return an edge between two vertices v and w, with  element.
@@ -147,6 +148,8 @@ class Graph(object):
             If an edge already exists between v and w, this will
             replace the previous edge.
         """
+        if not weight:
+            weight = self._distance(vertexA, vertexB)
         # CHECK IS NOT NEEEDED FOR CURRENT DATA SET AS WE KNOW IT IS CORRECT
         # if not vertexA in self._vertices or not vertexB in self._vertices:
         #     return None
@@ -164,6 +167,25 @@ class Graph(object):
 
         self._numEdges += 1
         return newEdge
+
+    def _distance(self, vertexA, vertexB):
+        ''' To calculate the the great circle distance
+         between two points using haversines formula
+         https://stackoverflow.com/questions/4913349/
+         haversine-formula-in-python-bearing-and-distance-between-two-gps-points'''
+        latA = vertexA._cords[0]
+        lonA = vertexA._cords[1]
+        latB = vertexB._cords[0]
+        lonB = vertexB._cords[1]
+        latA, lonA, latB, lonB = map(radians, [latA, lonA, latB, lonB])
+        # Haversine formula
+        dlon = lonB - lonA
+        dlat = latB - latA
+        a = sin(dlat / 2)**2 + cos(latA) * cos(latB) * sin(dlon / 2)**2
+        c = 2 * asin(sqrt(a))
+        r = 6371  # Radius of earth in kilometers. Use 3956 for miles
+
+        return (c * r)
 
     def addEdgePairs(self, edgelist):
         """ add all vertex pairs in elist as edges with empty elements. """
