@@ -243,7 +243,7 @@ class PathFinder(object):
             paths[node] = path
         return paths
 
-    def toFile(self, allPaths)
+    def toFile(self, allPaths):
     # allpaths dict object
         print(len(allPaths) )
         print('type\t,latitude\t,longitude\t,element\t,cost')
