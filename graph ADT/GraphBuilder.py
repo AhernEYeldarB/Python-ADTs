@@ -1,3 +1,5 @@
+# Author Bradley Aherne
+
 import graph.Graph
 import re
 from sys import argv
