@@ -1,4 +1,6 @@
 # Implementation of Dijkstra's shortest path algortihm
+# Author Bradley Aherne
+
 import graph.APQ as q
 import graph.Graph as g
 import graph.GraphBuilder
@@ -76,6 +78,7 @@ class PathFinder(object):
         # print(self._graph.getEdges())
 
     def buildFromDB(self, connection):
+        # Built from a gtfs feed stored in a postgres database
         cursor = connection.cursor()
         
         query = 'SELECT stop.id, ST_x(stop.point), ST_Y(stop.point), stop.name FROM stop WHERE feed_id=1'
@@ -272,11 +275,10 @@ class PathFinder(object):
 
 
 if __name__ == '__main__':
-    f = 'allhighways.osm'  # Filename
-    # f = 'corkhighways.osm'  # Filename
+    f = '' # filename
 
-    nodeA = 534442374  # Lat="51.8954004" lon="-8.4812332"
-    nodeB = 534442397  # lat="51.900861" lon="-8.4655496"
+    nodeA = 534442374  
+    nodeB = 534442397 
     # nodeA = 2734957290
     # nodeB = 1925516316
     
